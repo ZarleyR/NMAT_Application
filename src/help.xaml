@@ -1,0 +1,346 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NMAT"
+        xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing" x:Class="NMAT.help"
+        mc:Ignorable="d"
+        Title="Help Menu" Height="500" Width="800" MaxWidth="800" MaxHeight="500" MinWidth="800" MinHeight="500">
+    <Window.Resources>
+        <Style x:Key="FocusVisual">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <LinearGradientBrush x:Key="TabItem.Static.Background" EndPoint="0,1" StartPoint="0,0">
+            <GradientStop Color="#F0F0F0" Offset="0.0"/>
+            <GradientStop Color="#E5E5E5" Offset="1.0"/>
+        </LinearGradientBrush>
+        <SolidColorBrush x:Key="TabItem.Static.Border" Color="#ACACAC"/>
+        <LinearGradientBrush x:Key="TabItem.MouseOver.Background" EndPoint="0,1" StartPoint="0,0">
+            <GradientStop Color="#ECF4FC" Offset="0.0"/>
+            <GradientStop Color="#DCECFC" Offset="1.0"/>
+        </LinearGradientBrush>
+        <SolidColorBrush x:Key="TabItem.MouseOver.Border" Color="#FFA77EEA"/>
+        <SolidColorBrush x:Key="TabItem.Disabled.Background" Color="#F0F0F0"/>
+        <SolidColorBrush x:Key="TabItem.Disabled.Border" Color="#D9D9D9"/>
+        <SolidColorBrush x:Key="TabItem.Selected.Border" Color="Black"/>
+        <SolidColorBrush x:Key="TabItem.Selected.Background" Color="#FF3A1652"/>
+        <Style TargetType="{x:Type TabItem}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Background" Value="{StaticResource TabItem.Static.Background}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource TabItem.Static.Border}"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Padding" Value="6,2,6,2"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabItem}">
+                        <Grid x:Name="templateRoot" SnapsToDevicePixels="true">
+                            <Border x:Name="mainBorder" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,1,1,0" Background="{TemplateBinding Background}" Margin="0">
+                                <Border x:Name="innerBorder" BorderBrush="{StaticResource TabItem.Selected.Border}" BorderThickness="1,1,1,0" Background="{StaticResource TabItem.Selected.Background}" Margin="-1" Opacity="0"/>
+                            </Border>
+                            <ContentPresenter x:Name="contentPresenter" ContentSource="Header" Focusable="False" HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true"/>
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Left"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Background" TargetName="mainBorder" Value="{StaticResource TabItem.MouseOver.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="mainBorder" Value="{StaticResource TabItem.MouseOver.Border}"/>
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,1,0,1"/>
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,1,0,1"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true"/>
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Bottom"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Background" TargetName="mainBorder" Value="{StaticResource TabItem.MouseOver.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="mainBorder" Value="{StaticResource TabItem.MouseOver.Border}"/>
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,0,1,1"/>
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,0,1,1"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true"/>
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Right"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Background" TargetName="mainBorder" Value="{StaticResource TabItem.MouseOver.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="mainBorder" Value="{StaticResource TabItem.MouseOver.Border}"/>
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="0,1,1,1"/>
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="0,1,1,1"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}" Value="true"/>
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Top"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Background" TargetName="mainBorder" Value="{StaticResource TabItem.MouseOver.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="mainBorder" Value="{StaticResource TabItem.MouseOver.Border}"/>
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,1,1,0"/>
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,1,1,0"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="false"/>
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Left"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Opacity" TargetName="contentPresenter" Value="0.56"/>
+                                <Setter Property="Background" TargetName="mainBorder" Value="{StaticResource TabItem.Disabled.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="mainBorder" Value="{StaticResource TabItem.Disabled.Border}"/>
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,1,0,1"/>
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,1,0,1"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="false"/>
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Bottom"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Opacity" TargetName="contentPresenter" Value="0.56"/>
+                                <Setter Property="Background" TargetName="mainBorder" Value="{StaticResource TabItem.Disabled.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="mainBorder" Value="{StaticResource TabItem.Disabled.Border}"/>
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,0,1,1"/>
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,0,1,1"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="false"/>
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Right"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Opacity" TargetName="contentPresenter" Value="0.56"/>
+                                <Setter Property="Background" TargetName="mainBorder" Value="{StaticResource TabItem.Disabled.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="mainBorder" Value="{StaticResource TabItem.Disabled.Border}"/>
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="0,1,1,1"/>
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="0,1,1,1"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsEnabled, RelativeSource={RelativeSource Self}}" Value="false"/>
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Top"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Opacity" TargetName="contentPresenter" Value="0.56"/>
+                                <Setter Property="Background" TargetName="mainBorder" Value="{StaticResource TabItem.Disabled.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="mainBorder" Value="{StaticResource TabItem.Disabled.Border}"/>
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,1,1,0"/>
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,1,1,0"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="false"/>
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Left"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,1,0,1"/>
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,1,0,1"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true"/>
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Left"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Panel.ZIndex" Value="1"/>
+                                <Setter Property="Margin" Value="-2,-2,0,-2"/>
+                                <Setter Property="Opacity" TargetName="innerBorder" Value="1"/>
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,1,0,1"/>
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,1,0,1"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="false"/>
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Bottom"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,0,1,1"/>
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,0,1,1"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true"/>
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Bottom"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Panel.ZIndex" Value="1"/>
+                                <Setter Property="Margin" Value="-2,0,-2,-2"/>
+                                <Setter Property="Opacity" TargetName="innerBorder" Value="1"/>
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,0,1,1"/>
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,0,1,1"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="false"/>
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Right"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="0,1,1,1"/>
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="0,1,1,1"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true"/>
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Right"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Panel.ZIndex" Value="1"/>
+                                <Setter Property="Margin" Value="0,-2,-2,-2"/>
+                                <Setter Property="Opacity" TargetName="innerBorder" Value="1"/>
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="0,1,1,1"/>
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="0,1,1,1"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="false"/>
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Top"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,1,1,0"/>
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,1,1,0"/>
+                            </MultiDataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Self}}" Value="true"/>
+                                    <Condition Binding="{Binding TabStripPlacement, RelativeSource={RelativeSource AncestorType={x:Type TabControl}}}" Value="Top"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="Panel.ZIndex" Value="1"/>
+                                <Setter Property="Margin" Value="-2,-2,-2,0"/>
+                                <Setter Property="Opacity" TargetName="innerBorder" Value="1"/>
+                                <Setter Property="BorderThickness" TargetName="innerBorder" Value="1,1,1,0"/>
+                                <Setter Property="BorderThickness" TargetName="mainBorder" Value="1,1,1,0"/>
+                            </MultiDataTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <SolidColorBrush x:Key="Button.Static.Background" Color="#FFDDDDDD"/>
+        <SolidColorBrush x:Key="Button.Static.Border" Color="#FF707070"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FF575757"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Border" Color="Black"/>
+        <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FFC4E5F6"/>
+        <SolidColorBrush x:Key="Button.Pressed.Border" Color="#FF2C628B"/>
+        <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
+        <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
+        <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+            <Setter Property="Background" Value="{StaticResource Button.Static.Background}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsDefaulted" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.MouseOver.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid Background="#FF525152">
+        <Grid HorizontalAlignment="Right" MinHeight="400" Width="145" Margin="0,0,9,0" RenderTransformOrigin="0.5,0.5" Background="#BFB0AFAB">
+            <Grid.Effect>
+                <DropShadowEffect/>
+            </Grid.Effect>
+            <Button x:Name="help_search" Content="Search" Height="60" Margin="12.5,105.116,12.5,0" VerticalAlignment="Top" BorderBrush="Black" BorderThickness="1" Foreground="White" FontFamily="Georgia" Background="#FF2F2F2F" Width="120" FontSize="18" Click="help_search_Click">
+                <Button.Effect>
+                    <DropShadowEffect BlurRadius="10" Color="#FF2C2C2C"/>
+                </Button.Effect>
+            </Button>
+            <Button x:Name="vulnid_button" Content="VulnIDs" Height="60" Margin="12.5,173.035,12.5,0" VerticalAlignment="Top" BorderBrush="Black" BorderThickness="1" Foreground="White" FontFamily="Georgia" FontSize="16" Background="#FF2F2F2F" Width="120" Click="vulnid_button_Click" HorizontalAlignment="Center">
+                <Button.Effect>
+                    <DropShadowEffect BlurRadius="10" Color="#FF2C2C2C"/>
+                </Button.Effect>
+            </Button>
+            <Button x:Name="exit_button" Content="r" Height="60" Margin="12.5,0,12.5,60.8" VerticalAlignment="Bottom" BorderBrush="Black" BorderThickness="1" Foreground="White" FontFamily="Webdings" FontSize="25" Background="#FF2F2F2F" Width="120" Click="exit_button_Click" HorizontalAlignment="Center">
+                <Button.Effect>
+                    <DropShadowEffect BlurRadius="10" Color="#FF2C2C2C"/>
+                </Button.Effect>
+            </Button>
+            <Button x:Name="help_import" Content="Import" Height="60" Margin="12.5,37.116,12.5,0" VerticalAlignment="Top" BorderBrush="Black" Foreground="White" Background="#FF2F2F2F" FontFamily="Georgia" BorderThickness="1" FontSize="18" Click="help_import_Click">
+                <Button.Effect>
+                    <DropShadowEffect Color="#FF2C2C2C"/>
+                </Button.Effect>
+            </Button>
+        </Grid>
+        <Grid x:Name="ImportGrid" Margin="32.017,30,170,30" Background="#FF898885">
+            <Grid.Effect>
+                <DropShadowEffect/>
+            </Grid.Effect>
+            <TextBlock x:Name="textBlock" Height="44.8" Margin="10.4,8,0,0" TextWrapping="Wrap" Text="Importing Configuration Files" VerticalAlignment="Top" FontSize="24" TextDecorations="{x:Null}" FontWeight="Bold" Padding="20,5,0,0"/>
+            <TextBlock x:Name="textBlock1" Margin="36.991,49.128,0,0" TextWrapping="Wrap" FontSize="16" VerticalAlignment="Top" Width="525" HorizontalAlignment="Left"><Run FontSize="14" Text="When the application launches, the NMAT_Temp folder is created in the \MyDocuments.  This temporary directory is the location where the application will store the configuration files under audit.  All files in the folder will be removed when new configuration files are imported."/><LineBreak/></TextBlock>
+            <Rectangle Fill="#FF898885" HorizontalAlignment="Right" Height="45" Margin="0,14,-14.566,0" VerticalAlignment="Top" Width="30" RenderTransformOrigin="0.5,0.5"/>
+            <Image x:Name="image" Margin="62,110,0,199.872" Source="Import_Button.png" HorizontalAlignment="Left" Height="40"/>
+            <Image x:Name="image2" Margin="62,200,0,0" Source="Import_NMAT.png" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top"/>
+            <TextBlock x:Name="importbutton_textBlock" Margin="175,90,30,175" TextWrapping="Wrap" FontSize="14" HorizontalAlignment="Right" Text="This button will open a dialog box where you can select one or multiple configuration files to audit." Height="41" Width="360"/>
+            <TextBlock x:Name="vulnbutton_textBlock" Margin="175,195,30,0" TextWrapping="Wrap" FontSize="14" Width="360" HorizontalAlignment="Right" Text="This button will open a dialog box where you can select the latest .nmat configuration file to import the latest Vuln-ID lists." VerticalAlignment="Top"/>
+            <TextBlock x:Name="textBlock1_Copy1" Margin="36.991,0,0,25" TextWrapping="Wrap" FontSize="14" Width="525" HorizontalAlignment="Left" VerticalAlignment="Bottom"><Span><Run Text="The vulnerability checks can be performed against all files within the directory using the search bar or using the Vuln-ID drop-down list."/></Span><LineBreak/><LineBreak/><Span FontWeight="Bold"><Run Text="Special Notes:"/></Span><Span FontFamily="Calibri"><LineBreak/></Span><Span><Run Text="- Import all configuration files under review at one time.  Any files within the NMAT_Temp directory will be removed upon new configuration files being imported."/></Span></TextBlock>
+        </Grid>
+        <Grid x:Name="SearchGrid" Margin="32.017,30,170,30" Background="#FF898885">
+            <Grid.Effect>
+                <DropShadowEffect/>
+            </Grid.Effect>
+            <TextBlock x:Name="textBlock2" Height="44.8" Margin="10.4,8,0,0" TextWrapping="Wrap" Text="Search Functions" VerticalAlignment="Top" FontSize="24" TextDecorations="{x:Null}" FontWeight="Bold" Padding="20,5,0,0"/>
+            <TextBlock x:Name="textBlock3" Margin="36.991,49.128,0,0" TextWrapping="Wrap" FontSize="14" VerticalAlignment="Top" Width="525" HorizontalAlignment="Left" FontFamily="Georgia"><Run FontFamily="Segoe UI" Text="The search bar within the application will perform manual searches in the event you would like to find all instances of certain text within the configuration files."/><LineBreak/><Run Text=""/></TextBlock>
+            <Rectangle Fill="#FF898885" HorizontalAlignment="Right" Height="45" Margin="0,80,-14.566,0" VerticalAlignment="Top" Width="30" RenderTransformOrigin="0.5,0.5"/>
+            <Image x:Name="image1" Margin="36.991,130.475,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Source="Search_Bar.png" Width="206.841"/>
+            <TextBlock x:Name="textBlock1_Copy3" Margin="267.391,121.475,0,0" TextWrapping="Wrap" FontSize="14" Width="294.6" HorizontalAlignment="Left" Text="By tying into the search bar, you can find all instances of the text within all the configuration files within the NMAT_Temp Folder.  The results will populate in the Output window." Height="80.319" VerticalAlignment="Top"/>
+            <Image x:Name="output_image" Margin="267.391,0,29.592,79.713" Source="Output.png" VerticalAlignment="Bottom" d:LayoutOverrides="VerticalAlignment">
+                <Image.ToolTip>
+                    <ToolTip DataContext="{Binding PlacementTarget, RelativeSource={RelativeSource Self}}" Placement="Center">
+                        <Border BorderBrush="Black" BorderThickness="1" Margin="5,7,5,5">
+                            <Image Source="{Binding Source}" />
+                        </Border>
+                    </ToolTip>
+                </Image.ToolTip>
+            </Image>
+            <TextBlock x:Name="textBlock4" HorizontalAlignment="Left" Margin="43.983,0,0,64.8" TextWrapping="Wrap" Width="199.849" FontSize="14" Height="115.907" VerticalAlignment="Bottom"><Run Text="In the output example shown, you will notice that the search populated the &quot;sysname&quot; configured on both the "/><LineBreak/><Run Text="primary\boot.cfg and "/><LineBreak/><Run Text="secondary\boot.cfg files. "/><LineBreak/><Run Text=""/></TextBlock>
+        </Grid>
+        <Grid x:Name="VulnGrid" Margin="32.017,30,170,30" Background="#FF898885">
+            <Grid.Effect>
+                <DropShadowEffect/>
+            </Grid.Effect>
+            <TextBlock x:Name="vuln_textBlock1" Height="44.8" Margin="10.4,8,0,0" TextWrapping="Wrap" Text="Vulnerability IDs" VerticalAlignment="Top" FontSize="24" TextDecorations="{x:Null}" FontWeight="Bold" Padding="20,5,0,0"/>
+            <TextBlock x:Name="vuln_textBlock2" Margin="36.991,49.128,0,0" TextWrapping="Wrap" FontSize="14" VerticalAlignment="Top" Width="525" HorizontalAlignment="Left"><Run FontFamily="Segoe UI" Text="This tool utilizes an .nmat file extension that houses the critical information to perform audit checks against network configuration files.  The .nmat file is stored within the NMAT_Temp\Config directory and is not necessary to perform manual search functions using the Search Bar."/><LineBreak/><Run Text=""/></TextBlock>
+            <Rectangle Fill="#FF898885" HorizontalAlignment="Left" Height="45" Margin="576.149,148,-14.566,0" VerticalAlignment="Top" Width="30" RenderTransformOrigin="0.5,0.5"/>
+            <Image x:Name="Vuln_Image1" Margin="44.991,146.475,0,205.192" HorizontalAlignment="Left" Source="VulnID_Combo.png" d:LayoutOverrides="Height"/>
+            <TextBlock x:Name="vuln_textBlock3" Margin="267.391,132.893,0,193.112" TextWrapping="Wrap" FontSize="14" Width="294.6" HorizontalAlignment="Left" Text="Utilizing the dropdown, select the VulnID that you would like to check.  Once a selection is made, the Search Bar will populate with the string  that should be checked. "/>
+            <Image x:Name="vuln_output_image" Margin="267.391,0,29.592,35.982" Source="Vuln_Output.png" VerticalAlignment="Bottom" d:LayoutOverrides="VerticalAlignment">
+                <Image.ToolTip>
+                    <ToolTip DataContext="{Binding PlacementTarget, RelativeSource={RelativeSource Self}}" Placement="Center">
+                        <Border BorderBrush="Black" BorderThickness="1" Margin="5,7,5,5">
+                            <Image Source="{Binding Source}" />
+                        </Border>
+                    </ToolTip>
+                </Image.ToolTip>
+            </Image>
+            <TextBlock x:Name="vuln_textBlock4" HorizontalAlignment="Left" Margin="43.983,0,0,28" TextWrapping="Wrap" Width="199.849" FontSize="14" Height="152.707" VerticalAlignment="Bottom" Text="In the output example shown, you will notice that the VulnID V-3013 was checked.  The vulnerability is related to the logon banner being configured.  As shown, both the primary and secondary boot.cfg are properly configured."/>
+        </Grid>
+
+    </Grid>
+</Window>
