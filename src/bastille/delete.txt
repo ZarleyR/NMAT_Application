@@ -1,1 +1,1 @@
-delete
+The application was updated to allow for an XMLParsing function instead of importing into a <dictionary>.  To not overcomplicate the <dictionary> with tuple elements, I decided to move to an XML parse.  This allowed me to quickly reference a single VulnID and pass information quickly.  The VulnID class was created to store all the information into the vulnids list.  We can now update the xml document with the latest vulnerabilities and import them within the application. 
