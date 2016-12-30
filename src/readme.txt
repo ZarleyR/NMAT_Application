@@ -25,7 +25,7 @@ NMAT Improvements:
 User Interface:
 
   Updated: When user imports new file, VulnID dropdown list needs to reset to top selection
-  Updated: When user types in search window, clear VulnID and remove multiple steps selection
+  Updated: When user types in search window, clear VulnID and remove multiple steps groupbox
   Updated: Add "Next" and "Previous" buttons to go through the VulnID list quicker
-  Updated: Router Device IP is not populating properly.  SystemIP works...
+  Updated: Router Device IP is not populating properly.  SystemIP works to find the correct IP address
   Updated: If "none" is in the field, then multiple choice step doens't need to show up.
